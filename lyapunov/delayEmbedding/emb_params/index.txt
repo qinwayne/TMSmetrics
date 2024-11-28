@@ -1,0 +1,29 @@
+Implementation of the method described in
+	"A Differential Entropy Based Method for Determining the
+	Optimal Embedding Parameters of a Signal"
+by Gautama, T., Mandic, D.P. and Van Hulle, M.M. (2003), published in the
+Proceedings of the IEEE Conference on Acoustics, Speech, and Signal Processing
+(ICASSP 2003) (icassp_gautama.ps.gz)
+
+Note that there was an error in Eq. 3 in the original paper (corrected in
+icassp_gautama.ps.gz).
+
+
+optim_m_tau.m		example script
+
+sweep_kl.m		compute K-L entropy estimates for range of (m,tau)
+sweep_kl_mex.c		mex file (compile with "mex -O sweep_kl_mex.c")
+sweep_kl_mex.mexglx		precompiled version for linux
+sweep_kl_mex.mexsol		precompiled version for solaris
+sweep_kl_mex.dll		precompiled version for win98
+
+data/			example data used in paper
+generate_henon.m	generate a realisation of the modified henon map
+generate_surrogate.m	generate iAAFT surrogates (Schreiber and Schmitz, 2000)
+
+read_ar.m		read binary data
+write_ar.m		write binary data
+minmin.m		find minimum of 2D array
+
+
+
