@@ -1,4 +1,4 @@
-# Time-Series Biomarker Extraction Suite (MATLAB)
+# Brain Dynamic Metric Toolbox (MATLAB)
 
 This repository contains a suite of MATLAB functions designed to extract complex, nonlinear biomarkers from time-series data (such as neurophysiological signals, EEG, or other physiological responses). 
 
@@ -15,7 +15,7 @@ Calculates the PILI by analyzing the area under the curve (AUC) of a normalized,
 ### 2. Lyapunov Exponent (`getLE.m`)
 Estimates the largest Lyapunov Exponent to measure the chaotic nature and predictability of the system. It normalizes the data via z-scoring and relies on Wolf's algorithm for phase-space reconstruction to calculate the exponential divergence of nearby trajectories.
 * **Outputs:** `biomarkers.LE_est`
-* *Note:* This function requires external helper functions (`basgen_new.m` and `fet.m`) to generate the database and evolve the trajectories.
+* *Note:* This function requires external helper functions (`basgen_new.m` and `fet.m` from https://au.mathworks.com/matlabcentral/fileexchange/48084-wolf-lyapunov-exponent-estimation-from-a-time-series) to generate the database and evolve the trajectories.
 
 ### 3. Autocorrelation Function Width (`getACFW.m`)
 Measures the "memory" of a signal by calculating its autocorrelation function. It detrends and normalizes the data, then counts the number of lags where the autocorrelation coefficient remains strictly above a specific threshold (0.6).
