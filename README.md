@@ -17,7 +17,7 @@ Calculates the PILI to quantify the residual energy and system recovery followin
 Estimates the largest Lyapunov Exponent (LE) to measure the chaotic nature and oscillatory stability of the neural system without introducing normalization bias into the phase space.
 * **Method:** Requires dimension ($m$) and lag ($\tau$) inputs to embed the data into a new phase-space dimension. By default, these are set to $m = 3$ and $\tau = 1$. For custom datasets, these parameters can be optimized using the Cao embedding algorithm (e.g., an `optim_m_tau` function).
 * **Outputs:** `biomarkers.LE_est`
-* **Attribution:** This function relies on helper scripts (`basgen_new.m` and `fet.m`) to generate the database and evolve the trajectories based on Wolf's algorithm. These scripts are modified versions of the originals provided by Taehyeun Park (The Cooper Union, EE’15).
+* **Attribution:** This function relies on helper scripts (`basgen_new.m` and `fet.m`) to generate the database and evolve the trajectories based on Wolf's algorithm (https://au.mathworks.com/matlabcentral/fileexchange/48084-wolf-lyapunov-exponent-estimation-from-a-time-series). These scripts are modified versions of the originals provided by Taehyeun Park (The Cooper Union, EE’15).
 
 ### 3. Autocorrelation Function Width (`getACFW.m`)
 Measures the "memory" and interdependency of a signal.
