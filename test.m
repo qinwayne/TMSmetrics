@@ -1,35 +1,55 @@
-%%
-fqbd = {'Delta','Theta','Alpha','Beta','Gamma'};
-for fqbdi = 1:length(fqbd)
-    clearvars -except fqbdi fqbd
-    clc
-    close all
+%% Main Test Script for Biomarker Functions
+clear; clc;
 
-    folders = dir();
-    nonartefact_length = 1:550;
-    fs = 1000;
-    Delta = [1 4];
-    Theta = [4 8];
-    Alpha = [8 12];
-    Beta = [12 30];
-    Gamma = [30 80];
+% 1. Setup Dummy Parameters
+fs = 1000;                     % Sampling frequency: 1000 Hz
+num_trials = 5;                % Number of simulated channels/trials
+num_samples = 2000;            % Total length of the time-series response
+d = 1;                         % Dimension/Iteration index
 
-    freqband = fqbd{fqbdi};
-    for fid = 3:length(folders)
-        cd(folders(fid).name)
-        matfiles = dir('*.mat');
-        for fileid = 1:length(matfiles)
-            clear bioM
-            load(matfiles(fileid).name)
-            data = eval(matfiles(fileid).name(1:end-4));
-            bioM.pili = 0;
-            for chid = 1:size(data,1)
-                norm_response = data(chid,:);
-                bioM = getPILI(fs,norm_response,chid, bioM, nonartefact_length);
-                bioM = getACFW(norm_response,chid, bioM, nonartefact_length);
-                bioM = getLE(norm_response,chid, bioM, nonartefact_length);
-            end
-        end
-    end
+% Create an empty struct to store results
+biomarkers = struct();
+
+% Define the artifact-free index range 
+% (e.g., ignoring the first 200 samples due to stimulation artifact)
+nonartefact_length = 201:num_samples;
+
+% 2. Generate Dummy Data
+% Creating a simulated signal: a decaying sine wave with added noise
+t = (0:num_samples-1) / fs;
+clean_signal = exp(-2*t) .* sin(2*pi*10*t); 
+noise = 0.1 * randn(num_trials, num_samples);
+
+% Our dummy response matrix [trials x time]
+response = repmat(clean_signal, num_trials, 1) + noise;
+
+%% 3. Test Function 1: getPILI
+fprintf('Running getPILI...\n');
+try
+    biomarkers = getPILI(fs, response, d, biomarkers, nonartefact_length);
+    fprintf('  Success! PILI: %.4f | PILI2: %.4f\n', biomarkers.pili(d), biomarkers.pili2(d));
+catch ME
+    fprintf('  Error in getPILI: %s\n', ME.message);
 end
 
+%% 4. Test Function 2: getLE
+fprintf('Running getLE...\n');
+try
+    biomarkers = getLE(response, d, biomarkers, nonartefact_length);
+    fprintf('  Success! LE_est: %.4f\n', biomarkers.LE_est(1, d));
+catch ME
+    fprintf('  Error in getLE: %s\n', ME.message);
+end
+
+%% 5. Test Function 3: getACFW
+fprintf('Running getACFW...\n');
+try
+    biomarkers = getACFW(response, d, biomarkers, nonartefact_length);
+    fprintf('  Success! arE: %.4f\n', biomarkers.arE(d));
+catch ME
+    fprintf('  Error in getACFW: %s\n', ME.message);
+end
+
+%% 6. Display Final Struct
+fprintf('\n--- Final Biomarkers Struct ---\n');
+disp(biomarkers);
