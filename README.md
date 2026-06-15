@@ -48,11 +48,3 @@ All three functions update and return a central `biomarkers` structure, making i
 
 * **Baseline Correction:** `getPILI` automatically attempts to remove the DC offset by calculating the baseline from the final 10% of the provided data block. 
 * **Detrending:** `getACFW` performs linear detrending natively before computing the autocorrelation to ensure drifting baselines do not artificially inflate the memory of the signal.
-
----
-
-## 🤝 Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Ensure that any updates maintain compatibility with the shared `biomarkers` struct format.
-
-## 📄 License
-[MIT](https://choosealicense.com/licenses/mit/) *(Update this if you are using a different license)*
